@@ -1,31 +1,22 @@
 # SoapyRemote-server-installer
 
-<img src="https://img.shields.io/github/stars/hmol33/SoapyRemote-server-installer?style=flat-square&color=blue" alt="Stars">
-<img src="https://img.shields.io/github/forks/hmol33/SoapyRemote-server-installer?style=flat-square&color=green" alt="Forks">
-<img src="https://img.shields.io/github/license/hmol33/SoapyRemote-server-installer?style=flat-square" alt="License">
+SoapyRemote server installer for Debian, Ubuntu, Fedora and RedHat
 
-Install SoapyRemote server on debian, ubuntu, fedora or redhat.
-
-## Installatie
+## Installation
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/hmol33/SoapyRemote-server-installer/master/SoapyRemote-server-installer.sh)
+git clone https://github.com/hmol33/SoapyRemote-server-installer.git
+cd SoapyRemote-server-installer
 ```
 
-## Gebruik
+## Usage
 
-```bash
-# Voer het installatiescript uit
-bash <(curl -Ls https://raw.githubusercontent.com/hmol33/SoapyRemote-server-installer/master/SoapyRemote-server-installer.sh)
+See the documentation for more information.
 
-# Volg de instructies op het scherm
-# Na installatie: verbind met SoapyRemote via SoapySDR
-```
+## Contributing
 
-## Bijdragers
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- [hmol33](https://github.com/hmol33) — Onderhouder
+## License
 
-## Licentie
-
-MIT — zie [LICENSE](LICENSE) voor details.
+See [LICENSE](LICENSE) for details.
