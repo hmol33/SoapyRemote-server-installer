@@ -1,52 +1,88 @@
-#Compiling SoapySDR and SoapyRemote requires installing git, gcc, g++, make and cmake:
-# Debian / Ubuntu:
-sudo apt-get install git gcc g++ make cmake
+#!/bin/bash
+set -euo pipefail
 
-# Red Hat / Fedora:
-#dnf install git gcc gcc-c++ make cmake
+# SoapyRemote-server-installer: installeert SoapySDR + SoapyRemote server
+# Gebruik: bash SoapyRemote-server-installer.sh
 
-#Compile and install SoapySDR library and utilities:
-git clone https://github.com/pothosware/SoapySDR.git
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+# Detecteer OS
+if [ -f /etc/debian_version ]; then
+  OS="debian"
+  PKG_MANAGER="apt-get"
+elif [ -f /etc/redhat-release ]; then
+  OS="redhat"
+  PKG_MANAGER="dnf"
+else
+  echo "Onbekend OS. Installeer handmatig: git gcc g++ make cmake"
+  exit 1
+fi
+
+# Installeer build dependencies
+echo "Installing build dependencies..."
+sudo "$PKG_MANAGER" update
+sudo "$PKG_MANAGER" install -y git gcc g++ make cmake
+
+# Compileer en installeer SoapySDR
+if [ ! -d SoapySDR ]; then
+  git clone https://github.com/pothosware/SoapySDR.git
+fi
 cd SoapySDR
-mkdir build
+mkdir -p build
 cd build
 cmake ..
-make
+make -j$(nproc)
 sudo make install
-sudo ldconfig #needed on debian systems
+sudo ldconfig
+cd ../..
 
-#Install SDR hardware drivers for your SDR: (RTL-SDR in this example)
-# Debian / Ubuntu:
-sudo apt-get install rtl-sdr librtlsdr-dev
+# Installeer SDR hardware drivers (RTL-SDR voorbeeld)
+echo "Installing RTL-SDR drivers..."
+if [ "$OS" = "debian" ]; then
+  sudo apt-get install -y rtl-sdr librtlsdr-dev
+else
+  sudo dnf install -y rtl-sdr rtl-sdr-devel
+fi
 
-# Red Hat / Fedora:
-dnf install rtl-sdr rtl-sdr-devel
-
-#Compile and install SoapySDR adapter module for your SDR hardware: (RTL-SDR in this example, each module is in a separate repository, see the list of GitHub repositories for Pothosware)
-#https://github.com/pothosware/
-git clone https://github.com/pothosware/SoapyRTLSDR.git
+# Compileer en installeer SoapyRTLSDR
+if [ ! -d SoapyRTLSDR ]; then
+  git clone https://github.com/pothosware/SoapyRTLSDR.git
+fi
 cd SoapyRTLSDR
-mkdir build
+mkdir -p build
 cd build
 cmake ..
-make
+make -j$(nproc)
 sudo make install
+sudo ldconfig
+cd ../..
 
-#Check that SoapySDR can find and access your SDR hardware:
+# Check of SoapySDR de SDR hardware kan vinden
+echo "Probing SDR hardware..."
 SoapySDRUtil --probe
 
-#Compile and install SoapyRemote:
-git clone https://github.com/pothosware/SoapyRemote.git
+# Compileer en installeer SoapyRemote
+if [ ! -d SoapyRemote ]; then
+  git clone https://github.com/pothosware/SoapyRemote.git
+fi
 cd SoapyRemote
-mkdir build
+mkdir -p build
 cd build
 cmake ..
-make
+make -j$(nproc)
 sudo make install
+sudo ldconfig
+cd ../..
 
-#Start SoapyRemote server:
-# Bind to all interfaces in default port 55132
-SoapySDRServer --bind
-
-# Bind to a specific IP address and port
-#SoapySDRServer --bind="0.0.0.0:1234"
+echo ""
+echo "=== SoapyRemote Server Installatie Voltooid ==="
+echo ""
+echo "Start SoapyRemote server met:"
+echo "  SoapySDRServer --bind"
+echo ""
+echo "Of bind naar een specifiek IP/poort:"
+echo "  SoapySDRServer --bind=\"0.0.0.0:1234\""
+echo ""
+echo "Verbind vanaf een client met:"
+echo "  SoapySDRUtil --probe=\"driver=remote,remote=tcp://<server-ip>:55132\""
