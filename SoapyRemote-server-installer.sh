@@ -1,4 +1,5 @@
 #Compiling SoapySDR and SoapyRemote requires installing git, gcc, g++, make and cmake:
+set -euo pipefail
 # Debian / Ubuntu:
 sudo apt-get install git gcc g++ make cmake
 
