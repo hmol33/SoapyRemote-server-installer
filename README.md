@@ -3,6 +3,7 @@
 <img src="https://img.shields.io/github/stars/hmol33/SoapyRemote-server-installer?style=flat-square&color=blue" alt="Stars">
 <img src="https://img.shields.io/github/forks/hmol33/SoapyRemote-server-installer?style=flat-square&color=green" alt="Forks">
 <img src="https://img.shields.io/github/license/hmol33/SoapyRemote-server-installer?style=flat-square" alt="License">
+<img src="https://github.com/hmol33/SoapyRemote-server-installer/actions/workflows/ci.yml/badge.svg" alt="CI">
 
 Install SoapyRemote server on debian, ubuntu, fedora or redhat.
 
@@ -21,6 +22,13 @@ bash <(curl -Ls https://raw.githubusercontent.com/hmol33/SoapyRemote-server-inst
 # Volg de instructies op het scherm
 # Na installatie: verbind met SoapyRemote via SoapySDR
 ```
+
+## Ondersteunde besturingssystemen
+
+- Debian
+- Ubuntu
+- Fedora
+- Red Hat
 
 ## Bijdragers
 
