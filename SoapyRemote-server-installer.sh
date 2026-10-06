@@ -1,3 +1,4 @@
+#!/bin/bash
 #Compiling SoapySDR and SoapyRemote requires installing git, gcc, g++, make and cmake:
 # Debian / Ubuntu:
 sudo apt-get install git gcc g++ make cmake
@@ -7,9 +8,9 @@ sudo apt-get install git gcc g++ make cmake
 
 #Compile and install SoapySDR library and utilities:
 git clone https://github.com/pothosware/SoapySDR.git
-cd SoapySDR
+cd SoapySDR || exit
 mkdir build
-cd build
+cd build || exit
 cmake ..
 make
 sudo make install
@@ -25,9 +26,9 @@ dnf install rtl-sdr rtl-sdr-devel
 #Compile and install SoapySDR adapter module for your SDR hardware: (RTL-SDR in this example, each module is in a separate repository, see the list of GitHub repositories for Pothosware)
 #https://github.com/pothosware/
 git clone https://github.com/pothosware/SoapyRTLSDR.git
-cd SoapyRTLSDR
+cd SoapyRTLSDR || exit
 mkdir build
-cd build
+cd build || exit
 cmake ..
 make
 sudo make install
@@ -37,9 +38,9 @@ SoapySDRUtil --probe
 
 #Compile and install SoapyRemote:
 git clone https://github.com/pothosware/SoapyRemote.git
-cd SoapyRemote
+cd SoapyRemote || exit
 mkdir build
-cd build
+cd build || exit
 cmake ..
 make
 sudo make install
@@ -50,3 +51,4 @@ SoapySDRServer --bind
 
 # Bind to a specific IP address and port
 #SoapySDRServer --bind="0.0.0.0:1234"
+
